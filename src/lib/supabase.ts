@@ -3,16 +3,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
 import { AppState, Platform } from 'react-native';
 
-const url = process.env.EXPO_PUBLIC_SUPABASE_URL;
-const anonKey = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
+// Curby's Supabase project. The publishable key is designed to be shipped inside the app:
+// what each person can read or change is enforced by row-level security in the database.
+// Set the EXPO_PUBLIC_ variables in .env to point the app at a different project (e.g. local dev).
+const DEFAULT_URL = 'https://tsfddlawqdqdnxzcooof.supabase.co';
+const DEFAULT_PUBLISHABLE_KEY = 'sb_publishable_-TZHK39Bq5pfFFYtcP6GIA_IWqMqPJW';
+
+const url = process.env.EXPO_PUBLIC_SUPABASE_URL || DEFAULT_URL;
+const anonKey = process.env.EXPO_PUBLIC_SUPABASE_KEY || process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || DEFAULT_PUBLISHABLE_KEY;
 
 export const isSupabaseConfigured = Boolean(url && anonKey);
-
-if (!isSupabaseConfigured) {
-  console.warn(
-    'Curby: EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY are not set. Copy .env.example to .env and add your project keys.'
-  );
-}
 
 export const supabase = createClient(url ?? 'https://placeholder.supabase.co', anonKey ?? 'placeholder-anon-key', {
   auth: {

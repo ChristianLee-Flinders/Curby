@@ -38,13 +38,11 @@ src/lib/            theme tokens, formatting, places, Supabase client, social si
 supabase/           migration (schema, security rules, booking functions) and demo seed data
 ```
 
-## 1. Set up Supabase
+## 1. Supabase (done)
 
-1. Create a project at https://supabase.com (region: London `eu-west-2`).
-2. In **SQL Editor**, run `supabase/migrations/20261124000000_init.sql`, then `supabase/seed.sql` (demo hosts and 12 London spaces).
-   - Or with the Supabase CLI: `supabase link` then `supabase db push`, and `supabase db reset` locally to apply the seed.
-3. **Project Settings → API**: copy the Project URL and the `anon` public key.
-4. In this folder: `cp .env.example .env` and paste them in.
+The app is connected to the Curby project (`tsfddlawqdqdnxzcooof`, eu-west-1). Its URL and publishable key are in
+`src/lib/supabase.ts`, so no `.env` is needed. The schema, security rules, booking functions and 12 demo London spaces are
+already loaded. To rebuild it elsewhere, run the files in `supabase/migrations/` in order, then `supabase/seed.sql`.
 
 What the database enforces (so the app can't be tricked):
 - Exact addresses and access instructions are only readable by the host and by drivers who have booked.
